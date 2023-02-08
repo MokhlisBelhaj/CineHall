@@ -1,4 +1,16 @@
 <?php
+ header('Access-Control-Allow-Origin: *');
+  header('Content-Type: application/json');
+  header('Access-Control-Allow-Methods: POST');
+
+  if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+    if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']))
+      header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
+    if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']))
+      header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
+  }
+  if ($_SERVER["REQUEST_METHOD"] == "OPTIONS") return true;
+
 class Users extends Controller
 {
 
@@ -43,10 +55,12 @@ class Users extends Controller
       if ($this->userModel->register($data)) {
        
         // if ($this->userModel->login($data['reference'])) {
-          echo json_encode([
-            'Success' => "Registered With Success",
-            // 'Ref' => 'Here is your ref to login with : `' . $this->userModel->login($data['reference'])['reference'] . '`'
-          ]);
+          echo json_encode(
+            array(
+              'Success' => "Registered With Success",
+             'reference' => $data['reference']
+            )
+          );
         }
       } else {
         echo json_encode(['Error' => "Registered Failled"]);
