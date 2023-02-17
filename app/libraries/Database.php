@@ -69,6 +69,10 @@
       $this->execute();
       return $this->stmt->fetchAll(PDO::FETCH_OBJ);
     }
+    public function cols(){
+      $this->execute();
+      return $this->stmt->fetchAll(PDO::FETCH_COLUMN);
+    }
 
     // Get single record as object
     public function single(){

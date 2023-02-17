@@ -71,9 +71,9 @@ class Users extends Controller
   public function login()
   {
 
-    header("Access-Control-Allow-Methods: POST");
-    header('Access-Control-Allow-Origin: *');
-    header('Content-Type: application/json');
+    // header("Access-Control-Allow-Methods: POST");
+    // header('Access-Control-Allow-Origin: *');
+    // header('Content-Type: application/json');
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
       $_POST = filter_input_array(INPUT_POST, 513);
@@ -86,9 +86,15 @@ class Users extends Controller
         $loggedInUser = $this->userModel->login($reference);
 
         if ($loggedInUser) {
-          echo json_encode($loggedInUser);
+          echo json_encode([
+            "sucsses" =>true,
+            "data" => $loggedInUser
+          ]);
         } else {
-          echo json_encode(["invalid" => "your reference is invalid"]);
+          echo json_encode([
+            "sucsses" =>false,
+            "invalid" => "your reference is invalid"
+          ]);
         }
       }
     }
